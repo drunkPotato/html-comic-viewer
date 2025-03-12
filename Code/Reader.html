@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webcomic Viewer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <h1>Webcomic Viewer</h1>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <button class="btn" id="prevBtn">Previous</button>
+        <button class="btn" id="nextBtn">Next</button>
+    </div>
+
+    <!-- Comic Container -->
+    <div class="comic-container" id="comicContainer"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            
+            const basePath = "Seed/"; // Folder where comic images are stored
+            const totalChapters = 100; // Total number of chapters
+            const filePrefix = "seed Ch"; // File prefix
+            const fileExtension = ".jpg"; // Image format
+    
+            let currentChapter = 1; // Track the current chapter
+            const container = document.getElementById("comicContainer");
+
+            async function imageExists(url) {
+                return new Promise((resolve) => {
+                    const img = new Image();
+                    img.src = url;
+                    img.onload = () => resolve(true);  // Image exists
+                    img.onerror = () => resolve(false); // Image does not exist
+                });
+            }
+
+            async function loadChapter(chapter) {
+                container.innerHTML = ""; 
+                let page = 0;
+
+                while (await imageExists(`C:/Users/corsi/Comics/Seed/seed Ch${chapter}.${page}.jpg`)) {
+                    const filename = `C:/Users/corsi/Comics/Seed/seed Ch${chapter}.${page}.jpg`;
+                    const img = new Image();
+                    img.src = filename;
+                    img.loading = "lazy";
+                    container.appendChild(img);
+                    page++; // Move to the next page
+                }
+            }
+    
+            // Load the first chapter initially AFTER DOM is ready
+            loadChapter(currentChapter);
+    
+            // Navigation Buttons
+            document.getElementById("prevBtn").addEventListener("click", () => {
+                if (currentChapter > 1) {
+                    currentChapter--;
+                    loadChapter(currentChapter);
+                }
+            });
+    
+            document.getElementById("nextBtn").addEventListener("click", () => {
+                if (currentChapter < totalChapters) {
+                    currentChapter++;
+                    loadChapter(currentChapter);
+                }
+            });
+        });
+    </script>    
+</body>
+</html>
