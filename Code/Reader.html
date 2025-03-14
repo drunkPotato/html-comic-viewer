@@ -13,6 +13,10 @@
     <!-- Navigation Bar -->
     <div class="navbar">
         <button class="btn" id="prevBtn">Previous</button>
+
+        <!-- Chapter Selection -->
+        <select id="chapterSelect"></select>
+
         <button class="btn" id="nextBtn">Next</button>
     </div>
 
@@ -22,40 +26,52 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             
-            const basePath = "Seed/"; // Folder where comic images are stored
-            const totalChapters = 100; // Total number of chapters
+            const basePath = "C:/Users/corsi/Comics/Seed/"; // Folder path
+            const totalChapters = 152; // Adjust based on actual chapters
             const filePrefix = "seed Ch"; // File prefix
             const fileExtension = ".jpg"; // Image format
     
             let currentChapter = 1; // Track the current chapter
             const container = document.getElementById("comicContainer");
+            const chapterSelect = document.getElementById("chapterSelect");
+
+            // Populate chapter dropdown
+            for (let i = 1; i <= totalChapters; i++) {
+                let option = document.createElement("option");
+                option.value = i;
+                option.textContent = `Chapter ${i}`;
+                chapterSelect.appendChild(option);
+            }
 
             async function imageExists(url) {
                 return new Promise((resolve) => {
                     const img = new Image();
                     img.src = url;
-                    img.onload = () => resolve(true);  // Image exists
-                    img.onerror = () => resolve(false); // Image does not exist
+                    img.onload = () => resolve(true);
+                    img.onerror = () => resolve(false);
                 });
             }
 
             async function loadChapter(chapter) {
                 container.innerHTML = ""; 
                 let page = 0;
-
-                while (await imageExists(`C:/Users/corsi/Comics/Seed/seed Ch${chapter}.${page}.jpg`)) {
-                    const filename = `C:/Users/corsi/Comics/Seed/seed Ch${chapter}.${page}.jpg`;
+                
+                while (await imageExists(`${basePath}${filePrefix}${chapter}.${page}${fileExtension}`)) {
+                    const filename = `${basePath}${filePrefix}${chapter}.${page}${fileExtension}`;
                     const img = new Image();
                     img.src = filename;
                     img.loading = "lazy";
                     container.appendChild(img);
-                    page++; // Move to the next page
+                    page++;
                 }
+
+                // Update the dropdown selection
+                chapterSelect.value = chapter;
             }
-    
-            // Load the first chapter initially AFTER DOM is ready
+
+            // Load the first chapter initially
             loadChapter(currentChapter);
-    
+
             // Navigation Buttons
             document.getElementById("prevBtn").addEventListener("click", () => {
                 if (currentChapter > 1) {
@@ -63,12 +79,18 @@
                     loadChapter(currentChapter);
                 }
             });
-    
+
             document.getElementById("nextBtn").addEventListener("click", () => {
                 if (currentChapter < totalChapters) {
                     currentChapter++;
                     loadChapter(currentChapter);
                 }
+            });
+
+            // Chapter Selection Change
+            chapterSelect.addEventListener("change", (event) => {
+                currentChapter = parseInt(event.target.value);
+                loadChapter(currentChapter);
             });
         });
     </script>    
