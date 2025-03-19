@@ -47,8 +47,6 @@
             
             let storedChapter = localStorage.getItem("currentChapter");
             let currentChapter = storedChapter ? parseInt(storedChapter) : 1;
-            let loadId = 0;
-
 
 
             const container = document.getElementById("comicContainer");
@@ -76,31 +74,32 @@
             }
 
             function updateDropdowns(chapter) {
-                document.querySelectorAll(".navbar").forEach(dropdown => {
+                document.querySelectorAll("#chapterSelect").forEach(dropdown => {
                     dropdown.value = chapter;
                 });
             }
 
             async function loadChapter(chapter) {
+
                 container.innerHTML = ""; 
+                localStorage.setItem("currentChapter", chapter);
                 let page = 0;
 
+                // Update the dropdown selection
+                updateDropdowns(chapter);
                 
                 while (await imageExists(`Seed/seed Ch${chapter}.${page}.jpg`)) {
-                    
+
                     if (chapter != currentChapter) {
                         return;
-                    }
+                    }   
 
-                    const filename = `Seed/seed Ch${chapter}.${page}.jpg`;
                     const img = new Image();
-                    img.src = filename;
+                    img.src = `Seed/seed Ch${chapter}.${page}.jpg`;
                     img.loading = "lazy";
                     container.appendChild(img);
                     page++;
                 }
-                // Update the dropdown selection
-                updateDropdowns(chapter);
             }
 
             // Load the first chapter initially
@@ -148,7 +147,6 @@
     <div class="navbar">
         <button class="btn" id="prevBtn">Previous</button>
 
-        <!-- Chapter Selection -->
         <select id="chapterSelect"></select>
 
         <button class="btn" id="nextBtn">Next</button>
