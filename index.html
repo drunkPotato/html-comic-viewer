@@ -31,12 +31,10 @@
         
         document.addEventListener("DOMContentLoaded", function () {
             
-            const basePath = "./Seed/"; // Folder path
-            const totalChapters = 152; // Adjust based on actual chapters
-            const filePrefix = "seed Ch"; // File prefix
-            const fileExtension = ".jpg"; // Image format
-            
+            const totalChapters = 152; // Adjust based on actual chapters            
             let currentChapter = 1; // Track the current chapter
+
+            
             const container = document.getElementById("comicContainer");
             const chapterSelect = document.getElementById("chapterSelect");
 
@@ -65,8 +63,8 @@
                 container.innerHTML = ""; 
                 let page = 0;
                 
-                while (await imageExists(`${basePath}${filePrefix}${chapter}.${page}${fileExtension}`)) {
-                    const filename = `${basePath}${filePrefix}${chapter}.${page}${fileExtension}`;
+                while (await imageExists(`Seed/seed Ch${chapter}.${page}.jpg`)) {
+                    const filename = `Seed/seed Ch${chapter}.${page}.jpg}`;
                     const img = new Image();
                     img.src = filename;
                     img.loading = "lazy";
