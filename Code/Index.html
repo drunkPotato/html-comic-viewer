@@ -20,28 +20,37 @@
         <button class="btn" id="nextBtn">Next</button>
     </div>
 
+        <!-- Scroll Control Buttons -->
+    <button id="scrollToTop" class="scroll-btn">Top</button>
+    <button id="scrollToBottom" class="scroll-btn">Bottom</button>
+
     <!-- Comic Container -->
     <div class="comic-container" id="comicContainer"></div>
 
     <script>
+        
         document.addEventListener("DOMContentLoaded", function () {
             
-            const basePath = "C:/Users/corsi/Comics/Seed/"; // Folder path
+            const basePath = "./Seed/"; // Folder path
             const totalChapters = 152; // Adjust based on actual chapters
             const filePrefix = "seed Ch"; // File prefix
             const fileExtension = ".jpg"; // Image format
-    
+            
             let currentChapter = 1; // Track the current chapter
             const container = document.getElementById("comicContainer");
             const chapterSelect = document.getElementById("chapterSelect");
 
             // Populate chapter dropdown
-            for (let i = 1; i <= totalChapters; i++) {
-                let option = document.createElement("option");
-                option.value = i;
-                option.textContent = `Chapter ${i}`;
-                chapterSelect.appendChild(option);
-            }
+            document.querySelectorAll("#chapterSelect").forEach(select => {
+                select.innerHTML = ""; // Clear existing options
+
+                for (let i = 1; i <= totalChapters; i++) {
+                    let option = document.createElement("option");
+                    option.value = i;
+                    option.textContent = `Chapter ${i}`;
+                    select.appendChild(option);
+                }
+            });
 
             async function imageExists(url) {
                 return new Promise((resolve) => {
@@ -73,26 +82,51 @@
             loadChapter(currentChapter);
 
             // Navigation Buttons
-            document.getElementById("prevBtn").addEventListener("click", () => {
-                if (currentChapter > 1) {
-                    currentChapter--;
-                    loadChapter(currentChapter);
-                }
+            document.querySelectorAll("#prevBtn").forEach(button => {
+                button.addEventListener("click", () => {
+                    if (currentChapter > 1) {
+                        currentChapter--;
+                        loadChapter(currentChapter);
+                    }
+                });
             });
 
-            document.getElementById("nextBtn").addEventListener("click", () => {
-                if (currentChapter < totalChapters) {
-                    currentChapter++;
+            // Attach event listeners to all "Next" buttons
+            document.querySelectorAll("#nextBtn").forEach(button => {
+                button.addEventListener("click", () => {
+                    if (currentChapter < totalChapters) {
+                        currentChapter++;
+                        loadChapter(currentChapter);
+                    }
+                });
+            });
+            
+            // Attach event listeners to all chapter selection dropdowns
+            document.querySelectorAll("#chapterSelect").forEach(select => {
+                select.addEventListener("change", (event) => {
+                    currentChapter = parseInt(event.target.value);
                     loadChapter(currentChapter);
-                }
+                });
             });
 
-            // Chapter Selection Change
-            chapterSelect.addEventListener("change", (event) => {
-                currentChapter = parseInt(event.target.value);
-                loadChapter(currentChapter);
+            document.getElementById("scrollToTop").addEventListener("click", () => {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            });
+    
+                // Scroll to Bottom
+            document.getElementById("scrollToBottom").addEventListener("click", () => {
+                window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
             });
         });
     </script>    
+
+<div class="navbar">
+    <button class="btn" id="prevBtn">Previous</button>
+
+    <!-- Chapter Selection -->
+    <select id="chapterSelect"></select>
+
+    <button class="btn" id="nextBtn">Next</button>
+</div>
 </body>
 </html>
