@@ -1,5 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-794LFT1BMT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-794LFT1BMT');
+</script>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -61,6 +72,12 @@
                 });
             }
 
+            function updateDropdowns(chapter) {
+                document.querySelectorAll(".navbar").forEach(dropdown => {
+                    dropdown.value = chapter;
+                });
+            }
+
             async function loadChapter(chapter) {
                 container.innerHTML = ""; 
                 let page = 0;
@@ -75,7 +92,7 @@
                 }
 
                 // Update the dropdown selection
-                chapterSelect.value = chapter;
+                updateDropdowns(chapter);
             }
 
             // Load the first chapter initially
@@ -111,22 +128,23 @@
 
             document.getElementById("scrollToTop").addEventListener("click", () => {
                 window.scrollTo({ top: 0, behavior: "smooth" });
-            });
-    
-                // Scroll to Bottom
+                });
+
             document.getElementById("scrollToBottom").addEventListener("click", () => {
                 window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
-            });
+                });
+
         });
     </script>    
 
-<div class="navbar">
-    <button class="btn" id="prevBtn">Previous</button>
+    <div class="navbar">
+        <button class="btn" id="prevBtn">Previous</button>
 
-    <!-- Chapter Selection -->
-    <select id="chapterSelect"></select>
+        <!-- Chapter Selection -->
+        <select id="chapterSelect"></select>
 
-    <button class="btn" id="nextBtn">Next</button>
-</div>
+        <button class="btn" id="nextBtn">Next</button>
+    </div>
+    
 </body>
 </html>
