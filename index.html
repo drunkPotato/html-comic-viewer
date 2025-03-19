@@ -31,10 +31,12 @@
         
         document.addEventListener("DOMContentLoaded", function () {
             
-            const totalChapters = 152; // Adjust based on actual chapters            
-            let currentChapter = 1; // Track the current chapter
-
+            const totalChapters = 152; // Adjust based on actual chapters           
             
+            let storedChapter = localStorage.getItem("currentChapter");
+            let currentChapter = storedChapter ? parseInt(storedChapter) : 1;
+
+
             const container = document.getElementById("comicContainer");
             const chapterSelect = document.getElementById("chapterSelect");
 
@@ -64,7 +66,7 @@
                 let page = 0;
                 
                 while (await imageExists(`Seed/seed Ch${chapter}.${page}.jpg`)) {
-                    const filename = `Seed/seed Ch${chapter}.${page}.jpg}`;
+                    const filename = `Seed/seed Ch${chapter}.${page}.jpg`;
                     const img = new Image();
                     img.src = filename;
                     img.loading = "lazy";
