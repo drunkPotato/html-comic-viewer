@@ -5,152 +5,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
-    <title>Webcomic Viewer</title>
+    <title>Viewer Homepage</title>
     <link rel="stylesheet" href="styles.css">
 
     <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-794LFT1BMT"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'G-794LFT1BMT');
-    </script>
 </head>
 
 <body>
-    <h1>Webcomic Viewer</h1>
-
-    <!-- Navigation Bar -->
-    <div class="navbar">
-        <button class="btn" id="prevBtn">Previous</button>
-
-        <!-- Chapter Selection -->
-        <select id="chapterSelect"></select>
-
-        <button class="btn" id="nextBtn">Next</button>
-    </div>
-
-        <!-- Scroll Control Buttons -->
-    <button id="scrollToTop" class="scroll-btn">Top</button>
-    <button id="scrollToBottom" class="scroll-btn">Bottom</button>
-
-    <!-- Comic Container -->
-    <div class="comic-container" id="comicContainer"></div>
-
-    <script>
-        
-        document.addEventListener("DOMContentLoaded", function () {
-            
-            const totalChapters = 152; // Adjust based on actual chapters           
-            
-            let storedChapter = localStorage.getItem("currentChapter");
-            let currentChapter = storedChapter ? parseInt(storedChapter) : 1;
+    <img src="Cover2.jpg" alt="Here is the picture" style="max-width: 600px; height: auto; display: block; margin: 0 auto;" />
 
 
-            const container = document.getElementById("comicContainer");
-            const chapterSelect = document.getElementById("chapterSelect");
+    <a href="reader.html">
+        <button type="button" class="start-reading-btn">Start Reading</button>
+    </a>
 
-            // Populate chapter dropdown
-            document.querySelectorAll("#chapterSelect").forEach(select => {
-                select.innerHTML = ""; // Clear existing options
+    <div id="chapter-buttons"></div>
 
-                for (let i = 1; i <= totalChapters; i++) {
-                    let option = document.createElement("option");
-                    option.value = i;
-                    option.textContent = `Chapter ${i}`;
-                    select.appendChild(option);
-                }
-            });
+    <div style="text-align: center; margin-top: 1rem;">
+        <button id="showMoreBtn">Show More</button>
+      </div>
 
-            async function imageExists(url) {
-                return new Promise((resolve) => {
-                    const img = new Image();
-                    img.src = url;
-                    img.onload = () => resolve(true);
-                    img.onerror = () => resolve(false);
-                });
-            }
+      <script>
 
-            function updateDropdowns(chapter) {
-                document.querySelectorAll("#chapterSelect").forEach(dropdown => {
-                    dropdown.value = chapter;
-                });
-            }
+        let shownChapters = 10;
+        const totalChapters = 152; // Change this as needed
+        const container = document.getElementById('chapter-buttons');
 
-            async function loadChapter(chapter) {
-
-                container.innerHTML = ""; 
-                localStorage.setItem("currentChapter", chapter);
-                let page = 0;
-
-                // Update the dropdown selection
-                updateDropdowns(chapter);
+        function renderChapters(from, to){            
+            for (let i = from; i <= to; i++) {
+                const link = document.createElement('a');
+                link.href = `reader.html?chapter=${i}`;
                 
-                while (await imageExists(`Seed/seed Ch${chapter}.${page}.jpg`)) {
-
-                    if (chapter != currentChapter) {
-                        return;
-                    }   
-
-                    const img = new Image();
-                    img.src = `Seed/seed Ch${chapter}.${page}.jpg`;
-                    img.loading = "lazy";
-                    container.appendChild(img);
-                    page++;
-                }
+                const button = document.createElement('button');
+                button.textContent = `Chapter ${i}`;
+                
+                link.appendChild(button);
+                container.appendChild(link);
             }
+        }
 
-            // Load the first chapter initially
-            loadChapter(currentChapter);
+        renderChapters(1, shownChapters);
 
-            // Navigation Buttons
-            document.querySelectorAll("#prevBtn").forEach(button => {
-                button.addEventListener("click", () => {
-                    if (currentChapter > 1) {
-                        currentChapter--;
-                        loadChapter(currentChapter);
-                    }
-                });
-            });
+        showMoreBtn.addEventListener('click', () => {
+            if (shownChapters === totalChapters) return;
 
-            // Attach event listeners to all "Next" buttons
-            document.querySelectorAll("#nextBtn").forEach(button => {
-                button.addEventListener("click", () => {
-                    if (currentChapter < totalChapters) {
-                        currentChapter++;
-                        loadChapter(currentChapter);
-                    }
-                });
-            });
-            
-            // Attach event listeners to all chapter selection dropdowns
-            document.querySelectorAll("#chapterSelect").forEach(select => {
-                select.addEventListener("change", (event) => {
-                    currentChapter = parseInt(event.target.value);
-                    loadChapter(currentChapter);
-                });
-            });
-
-            document.getElementById("scrollToTop").addEventListener("click", () => {
-                window.scrollTo({ top: 0, behavior: "smooth" });
-                });
-
-            document.getElementById("scrollToBottom").addEventListener("click", () => {
-                window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
-                });
-
+            let prev = shownChapters
+            shownChapters += 40;
+            if(shownChapters > totalChapters){
+                shownChapters = totalChapters;
+            }
+            renderChapters(prev + 1, shownChapters);
         });
-    </script>    
+      </script>
 
-    <div class="navbar">
-        <button class="btn" id="prevBtn">Previous</button>
-
-        <select id="chapterSelect"></select>
-
-        <button class="btn" id="nextBtn">Next</button>
-    </div>
-    
 </body>
 </html>

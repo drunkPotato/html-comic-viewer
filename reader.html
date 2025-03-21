@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Webcomic Viewer</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-794LFT1BMT"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-794LFT1BMT');
+    </script>
+
+</head>
+
+<body>
+    <h1>Seed</h1>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <button class="btn" id="prevBtn">Previous</button>
+
+        <!-- Chapter Selection -->
+        <select id="chapterSelect"></select>
+
+        <button class="btn" id="nextBtn">Next</button>
+    </div>
+
+        <!-- Scroll Control Buttons -->
+    <button id="scrollToTop" class="scroll-btn">Top</button>
+    <button id="scrollToBottom" class="scroll-btn">Bottom</button>
+
+    <!-- Comic Container -->
+    <div class="comic-container" id="comicContainer"></div>
+
+    
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+            
+            const totalChapters = 152;          
+            
+            const params = new URLSearchParams(window.location.search);
+            let currentChapter = parseInt(params.get('chapter')) || 1;
+            
+
+            const container = document.getElementById("comicContainer");
+            const chapterSelect = document.getElementById("chapterSelect");
+
+            // Populate chapter dropdown
+            document.querySelectorAll("#chapterSelect").forEach(select => {
+                select.innerHTML = ""; // Clear existing options
+
+                for (let i = 1; i <= totalChapters; i++) {
+                    let option = document.createElement("option");
+                    option.value = i;
+                    option.textContent = `Chapter ${i}`;
+                    select.appendChild(option);
+                }
+            });
+
+            async function imageExists(url) {
+                return new Promise((resolve) => {
+                    const img = new Image();
+                    img.src = url;
+                    img.onload = () => resolve(true);
+                    img.onerror = () => resolve(false);
+                });
+            }
+
+            function updateDropdowns(chapter) {
+                document.querySelectorAll("#chapterSelect").forEach(dropdown => {
+                    dropdown.value = chapter;
+                });
+            }
+
+            async function loadChapter(chapter) {
+
+                container.innerHTML = ""; 
+                if(chapter > 152){
+                    currentChapter = 152;
+                    chapter = 152;
+                }
+                if(chapter < 1){
+                    currentChapter = 1;
+                    chapter = 1;
+                }
+                history.pushState({ chapter: chapter }, '', `?chapter=${chapter}`);
+                let page = 0;
+                
+                console.log(chapter);
+
+                // Update the dropdown selection
+                updateDropdowns(chapter);
+                
+                while (await imageExists(`Seed/seed Ch${chapter}.${page}.jpg`)) {
+
+                    if (chapter != currentChapter) {
+                        return;
+                    }   
+
+                    const img = new Image();
+                    img.src = `Seed/seed Ch${chapter}.${page}.jpg`;
+                    img.loading = "lazy";
+                    container.appendChild(img);
+                    page++;
+                }
+            }
+
+            // Load the first chapter initially
+            loadChapter(currentChapter);
+
+            // Navigation Buttons
+            document.querySelectorAll("#prevBtn").forEach(button => {
+                button.addEventListener("click", () => {
+                    if (currentChapter > 1) {
+                        currentChapter--;
+                        loadChapter(currentChapter);
+                    }
+                });
+            });
+
+            // Attach event listeners to all "Next" buttons
+            document.querySelectorAll("#nextBtn").forEach(button => {
+                button.addEventListener("click", () => {
+                    if (currentChapter < totalChapters) {
+                        currentChapter++;
+                        loadChapter(currentChapter);
+                    }
+                });
+            });
+            
+            // Attach event listeners to all chapter selection dropdowns
+            document.querySelectorAll("#chapterSelect").forEach(select => {
+                select.addEventListener("change", (event) => {
+                    currentChapter = parseInt(event.target.value);
+                    loadChapter(currentChapter);
+                });
+            });
+
+            document.getElementById("scrollToTop").addEventListener("click", () => {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+                });
+
+            document.getElementById("scrollToBottom").addEventListener("click", () => {
+                window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+                });
+
+        });
+    </script>    
+
+    <div class="navbar">
+        <button class="btn" id="prevBtn">Previous</button>
+
+        <select id="chapterSelect"></select>
+
+        <button class="btn" id="nextBtn">Next</button>
+    </div>
+    
+</body>
+</html>

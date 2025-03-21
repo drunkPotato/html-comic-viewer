@@ -23,6 +23,15 @@ body {
     cursor: pointer;
     font-size: 16px;
     border-radius: 5px;
+    min-width: 80px; 
+    max-width: 150px; 
+    width: 20vw; 
+}
+
+#chapterSelect {
+    min-width: 80px; 
+    max-width: 150px; 
+    width: 20vw; 
 }
 
 .btn:hover {
@@ -41,6 +50,9 @@ img {
     height: auto;
     border-radius: 5px;
     background: black;
+}
+h1 {
+    color: crimson;
 }
 
 h2 {
@@ -89,4 +101,52 @@ h2 {
 /* Position the Bottom button at the bottom */
 #scrollToBottom {
     bottom: 20px;
+}
+
+#chapter-buttons {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+gap: 1rem;
+margin-top: 2rem;
+}
+
+#chapter-buttons a {
+text-decoration: none;
+}
+
+#chapter-buttons button {
+width: 100%;
+padding: 0.75rem 1rem;
+background-color: #007bff;
+color: white;
+border: none;
+border-radius: 0.5rem;
+font-weight: bold;
+cursor: pointer;
+transition: background-color 0.2s ease-in-out;
+}
+
+.start-reading-btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 1.1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+  }
+  
+  .start-reading-btn:hover {
+    background-color: #0056b3;
+    transform: scale(1.03);
+  }
+  
+  .start-reading-btn:active {
+    transform: scale(0.98);
+  }  
+
+#chapter-buttons button:hover {
+background-color: #0056b3;
 }
