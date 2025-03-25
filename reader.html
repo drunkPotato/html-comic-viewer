@@ -29,7 +29,7 @@
     <!-- Navigation Bar -->
     <div class="navbar">
         <button class="btn" id="prevBtn">Previous</button>
-        <select id="chapterSelect"></select>
+        <select class="chapterSelect"></select>
         <button class="btn" id="nextBtn">Next</button>
     </div>
 
@@ -52,10 +52,9 @@
             
 
             const container = document.getElementById("comicContainer");
-            const chapterSelect = document.getElementById("chapterSelect");
 
             // Populate chapter dropdown
-            document.querySelectorAll("#chapterSelect").forEach(select => {
+            document.querySelectorAll(".chapterSelect").forEach(select => {
                 select.innerHTML = ""; // Clear existing options
 
                 for (let i = 1; i <= totalChapters; i++) {
@@ -76,7 +75,7 @@
             }
 
             function updateDropdowns(chapter) {
-                document.querySelectorAll("#chapterSelect").forEach(dropdown => {
+                document.querySelectorAll(".chapterSelect").forEach(dropdown => {
                     dropdown.value = chapter;
                 });
             }
@@ -136,7 +135,7 @@
             });
             
             // Attach event listeners to all chapter selection dropdowns
-            document.querySelectorAll("#chapterSelect").forEach(select => {
+            document.querySelectorAll(".chapterSelect").forEach(select => {
                 select.addEventListener("change", (event) => {
                     currentChapter = parseInt(event.target.value);
                     loadChapter(currentChapter);
@@ -156,7 +155,7 @@
 
     <div class="navbar">
         <button class="btn" id="prevBtn">Previous</button>
-        <select id="chapterSelect"></select>
+        <select class="chapterSelect"></select>
         <button class="btn" id="nextBtn">Next</button>
     </div>
     <div style="height: 75px;"></div>

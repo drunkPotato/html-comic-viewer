@@ -10,6 +10,7 @@ body {
 
 .navbar {
     display: flex;
+    align-items: center; 
     justify-content: center;
     gap: 10px;
     margin-bottom: 20px;
@@ -22,16 +23,27 @@ body {
     border: none;
     cursor: pointer;
     font-size: 16px;
+    align-items: center; 
+    justify-content: center;
     border-radius: 5px;
     min-width: 80px; 
     max-width: 150px; 
     width: 20vw; 
 }
 
-#chapterSelect {
-    min-width: 80px; 
-    max-width: 150px; 
-    width: 20vw; 
+.chapterSelect {
+    padding: 0.75rem 1.5rem;
+    font-size: 1.1rem;
+    align-items: center; 
+    justify-content: center;
+    margin: 10px;
+    background-color: #04b85b;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
 }
 
 .btn:hover {
@@ -61,10 +73,9 @@ h2 {
     color: lightgray;
 }
 
-/* Scroll Buttons */
 .scroll-btn {
     position: fixed;
-    right: 20px; /* Distance from right */
+    right: 20px; 
     padding: 10px 15px;
     font-size: 16px;
     background-color: #333;
@@ -107,6 +118,7 @@ h2 {
     padding: 1rem;
     max-width: calc((140.73px + 4rem) * 5); /* Adjusted for larger gap */
     margin: 0 auto;
+    align-items: center; 
     justify-content: center;
 }
 
@@ -135,9 +147,9 @@ h2 {
 
 .chapter-link {
     display: flex;
-    border: 1px dashed red;
     flex-direction: column;
-    align-items: center;
+    align-items: center; 
+    justify-content: center;
     text-decoration: none;
     color: white;
     width: 100%;                
@@ -152,13 +164,15 @@ h2 {
 .chapter-controls {
     display: flex;
     flex-wrap: wrap;
+    align-items: center; 
     justify-content: center;
-    align-items: center;
     gap: 1rem;
     margin-top: 1.5rem;
 }
 
 .chapter-control-btn {
+    align-items: center; 
+    justify-content: center;
     padding: 0.75rem 1.5rem;
     font-size: 1.1rem;
     background-color: #04b85b;
@@ -170,7 +184,7 @@ h2 {
     transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
 }
 
-.start-reading-btn {
+#start-reading-btn {
     padding: 0.75rem 1.5rem;
     font-size: 1.1rem;
     margin: 10px;

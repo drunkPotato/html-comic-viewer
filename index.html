@@ -12,12 +12,15 @@
 </head>
 
 <body>
+
+    <button id="scrollToTop" class="scroll-btn">Top</button>
+    <button id="scrollToBottom" class="scroll-btn">Bottom</button>
+
     <img src="Covers/Cover.jpg" alt="Here is the picture" style="max-width: 600px; height: auto; display: block; margin: 0 auto;" />
 
+    <button type="button" id="start-reading-btn">Start Reading</button>
 
-    <a href="reader.html">
-        <button type="button" class="start-reading-btn">Start Reading</button>
-    </a>
+    <select class="chapterSelect"></select>
 
     <div id="chapter-buttons"></div>
 
@@ -29,10 +32,26 @@
     
 
       <script>
-
         let shownChapters = 10;
         const totalChapters = 152; 
         const container = document.getElementById('chapter-buttons');
+
+
+        document.querySelectorAll(".chapterSelect").forEach(select => {
+            select.innerHTML = ""; 
+
+            for (let i = 1; i <= totalChapters; i++) {
+                let option = document.createElement("option");
+                option.value = i;
+                option.textContent = `Chapter ${i}`;
+                select.appendChild(option);
+            }
+
+            select.addEventListener("change", (event) => {
+            currentChapter = parseInt(event.target.value);
+            window.location.href = `reader.html?chapter=${currentChapter}`;
+            });
+        });
 
         function renderChapters(from, to) {
             for (let i = from; i <= to; i++) {
@@ -42,7 +61,7 @@
 
                 // Create image element
                 const img = document.createElement('img');
-                img.src = `Covers/Chapters/seed Ch${i}.jpg`; // Change this to the Cover folder (Keep the naming convention lmao)
+                img.src = `Covers/Chapters/seed Ch${i}.jpg`;
                 img.alt = `Chapter ${i} preview`;
                 img.className = 'chapter-thumbnail';
 
@@ -84,6 +103,19 @@
             shownChapters = 10;
             renderChapters(1, shownChapters);
         })
+
+        document.getElementById("scrollToTop").addEventListener("click", () => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+
+        document.getElementById("scrollToBottom").addEventListener("click", () => {
+            window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+        });
+
+        document.getElementById("start-reading-btn").addEventListener("click", () => {
+            window.location.href = "reader.html";
+        });
+        
       </script>
 
 </body>
