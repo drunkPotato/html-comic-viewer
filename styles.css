@@ -109,14 +109,17 @@ h2 {
     margin: 0 auto;
     justify-content: center;
 }
+
 @media (max-width: 800px) {
     #chapter-buttons {
+        grid-template-columns: repeat(3, 1fr);
         gap: 1rem;
     }
 }
 
 @media (max-width: 500px) {
     #chapter-buttons {
+        grid-template-columns: repeat(2, 1fr);
         gap: 0.5rem;
     }
 }
