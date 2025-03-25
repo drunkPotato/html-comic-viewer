@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <img src="Cover.jpg" alt="Here is the picture" style="max-width: 600px; height: auto; display: block; margin: 0 auto;" />
+    <img src="Covers/Cover.jpg" alt="Here is the picture" style="max-width: 600px; height: auto; display: block; margin: 0 auto;" />
 
 
     <a href="reader.html">
@@ -21,9 +21,12 @@
 
     <div id="chapter-buttons"></div>
 
-    <div style="text-align: center; margin-top: 1rem;">
-        <button id="showMoreBtn">Show More</button>
-      </div>
+    <div class ="chapter-controls">
+        <button id="showMoreBtn" class="chapter-control-btn">Show More</button>
+        <button id="showAllBtn" class="chapter-control-btn">Show All</button>
+        <button id="hideAllBtn" class="chapter-control-btn">Hide All</button>
+    </div>
+    
 
       <script>
 
@@ -39,7 +42,7 @@
 
                 // Create image element
                 const img = document.createElement('img');
-                img.src = `Seed/seed Ch${i}.0.jpg`; // Change this to the Cover folder (Keep the naming convention lmao)
+                img.src = `Covers/Chapters/seed Ch${i}.jpg`; // Change this to the Cover folder (Keep the naming convention lmao)
                 img.alt = `Chapter ${i} preview`;
                 img.className = 'chapter-thumbnail';
 
@@ -53,23 +56,34 @@
                 link.appendChild(text);
                 container.appendChild(link);
             }
-}
-
-
-
+        }
 
         renderChapters(1, shownChapters);
 
         showMoreBtn.addEventListener('click', () => {
             if (shownChapters === totalChapters) return;
 
-            let prev = shownChapters
+            let prev = shownChapters;
             shownChapters += 40;
             if(shownChapters > totalChapters){
                 shownChapters = totalChapters;
             }
             renderChapters(prev + 1, shownChapters);
         });
+
+        showAllBtn.addEventListener('click', () => {
+            if(shownChapters === totalChapters) return;
+            
+            let prev = shownChapters;
+            shownChapters = totalChapters;
+            renderChapters(prev + 1, shownChapters);
+        })
+
+        hideAllBtn.addEventListener('click', () => {
+            container.innerHTML = '';
+            shownChapters = 10;
+            renderChapters(1, shownChapters);
+        })
       </script>
 
 </body>

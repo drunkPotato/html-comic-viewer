@@ -51,6 +51,7 @@ img {
     border-radius: 5px;
     background: black;
 }
+
 h1 {
     color: crimson;
 }
@@ -99,35 +100,25 @@ h2 {
     opacity: 1;
 }
 
-/* Position the Top button at the top */
-#scrollToTop {
-    top: 20px;
-}
-
-/* Position the Bottom button at the bottom */
-#scrollToBottom {
-    bottom: 20px;
-}
-
 #chapter-buttons {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 20px;
-    padding: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(140.73px, 1fr));
+    gap: 4rem; /* Larger gap for desktop */
+    padding: 1rem;
+    max-width: calc((140.73px + 4rem) * 5); /* Adjusted for larger gap */
+    margin: 0 auto;
+    justify-content: center;
+}
+@media (max-width: 800px) {
+    #chapter-buttons {
+        gap: 1rem;
+    }
 }
 
-#chapter-buttons a {
-    text-decoration: none;
-}
-
-.chapter-link {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-decoration: none;
-    color: white;
-    width: fit-content;
-    box-sizing: border-box;
+@media (max-width: 500px) {
+    #chapter-buttons {
+        gap: 0.5rem;
+    }
 }
 
 .chapter-thumbnail {
@@ -138,11 +129,46 @@ h2 {
     display: block;
 }
 
+.chapter-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    width: 140.73px;
+    box-sizing: border-box;
+}
+
+#chapter-buttons a {
+    text-decoration: none;
+}
+
+.chapter-controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.chapter-control-btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 1.1rem;
+    background-color: #04b85b;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+}
 
 .start-reading-btn {
     padding: 0.75rem 1.5rem;
     font-size: 1.1rem;
-    background-color: #007bff;
+    margin: 10px;
+    background-color: #04b85b;
     color: white;
     border: none;
     border-radius: 0.5rem;
