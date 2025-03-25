@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <img src="Cover2.jpg" alt="Here is the picture" style="max-width: 600px; height: auto; display: block; margin: 0 auto;" />
+    <img src="Cover.jpg" alt="Here is the picture" style="max-width: 600px; height: auto; display: block; margin: 0 auto;" />
 
 
     <a href="reader.html">
@@ -28,21 +28,35 @@
       <script>
 
         let shownChapters = 10;
-        const totalChapters = 152; // Change this as needed
+        const totalChapters = 152; 
         const container = document.getElementById('chapter-buttons');
 
-        function renderChapters(from, to){            
+        function renderChapters(from, to) {
             for (let i = from; i <= to; i++) {
                 const link = document.createElement('a');
                 link.href = `reader.html?chapter=${i}`;
-                
-                const button = document.createElement('button');
-                button.textContent = `Chapter ${i}`;
-                
-                link.appendChild(button);
+                link.className = 'chapter-link';
+
+                // Create image element
+                const img = document.createElement('img');
+                img.src = `Seed/seed Ch${i}.0.jpg`; // Change this to the Cover folder (Keep the naming convention lmao)
+                img.alt = `Chapter ${i} preview`;
+                img.className = 'chapter-thumbnail';
+
+                // Create text node
+                const text = document.createElement('span');
+                text.textContent = `Chapter ${i}`;
+                text.className = 'chapter-label';
+
+                // Append elements
+                link.appendChild(img);
+                link.appendChild(text);
                 container.appendChild(link);
             }
-        }
+}
+
+
+
 
         renderChapters(1, shownChapters);
 
