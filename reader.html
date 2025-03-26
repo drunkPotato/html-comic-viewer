@@ -22,17 +22,15 @@
 <body>
     <h1>Seed</h1>
 
-    <a href="index.html">
-        <button class="btn" id="homebtn">Homepage</button>
-    </a>
-
+    
     <!-- Navigation Bar -->
     <div class="navbar">
         <button class="btn" id="prevBtn">Previous</button>
         <select class="chapterSelect"></select>
         <button class="btn" id="nextBtn">Next</button>
     </div>
-
+    
+    <button id="homeBtn" class="btn">Homepage</button>
         <!-- Scroll Control Buttons -->
     <button id="scrollToTop" class="scroll-btn">Top</button>
     <button id="scrollToBottom" class="scroll-btn">Bottom</button>
@@ -149,6 +147,10 @@
             document.getElementById("scrollToBottom").addEventListener("click", () => {
                 window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
                 });
+
+            document.getElementById("homeBtn").addEventListener("click", () => {
+                window.location.href = "index.html";
+            });
 
         });
     </script>    
